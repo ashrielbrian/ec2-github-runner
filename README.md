@@ -171,6 +171,17 @@ Use the following steps to prepare your workflow for running on your EC2 self-ho
 4. Create a new EC2 image (AMI) from the instance.
 5. Remove the instance if not required anymore after the image is created.
 
+Alternatively, you can use a vanilla EC2 AMI and setup the dependencies setup via `pre-runner-script` in the workflow YAML file:
+```yaml
+          - name: Start EC2 runner
+            with:
+              mode: start
+              ec2-image-id: ami-07bdb09c49774f92e
+              pre-runner-script: |
+                 sudo yum update -y && \
+                 sudo yum install docker git libicu -y && \
+                 sudo systemctl enable docker
+```
 **4. Prepare VPC with subnet and security group**
 
 1. Create a new VPC and a new subnet in it.
@@ -203,6 +214,8 @@ Now you're ready to go!
 | `iam-role-name`                                                                                                                                                              | Optional. Used only with the `start` mode. | IAM role name to attach to the created EC2 runner. <br><br> This allows the runner to have permissions to run additional actions within the AWS account, without having to manage additional GitHub secrets and AWS users. <br><br> Setting this requires additional AWS permissions for the role launching the instance (see above). |
 | `aws-resource-tags`                                                                                                                                                          | Optional. Used only with the `start` mode. | Specifies tags to add to the EC2 instance and any attached storage. <br><br> This field is a stringified JSON array of tag objects, each containing a `Key` and `Value` field (see example below). <br><br> Setting this requires additional AWS permissions for the role launching the instance (see above).                         |
 | `runner-home-dir`                                                                                                                                                              | Optional. Used only with the `start` mode. | Specifies a directory where pre-installed actions-runner software and scripts are located.<br><br> |
+| `pre-runner-script`                                                                                                                                                              | Optional. Used only with the `start` mode. | Specifies bash commands to run before the runner starts.  It's useful for installing dependencies with apt-get, yum, dnf, etc. For example:<pre>          - name: Start EC2 runner<br>            with:<br>              mode: start<br>              ec2-image-id: ami-07bdb09c49774f92e<br>              pre-runner-script: \|<br>                 sudo yum update -y && \ <br>                 sudo yum install docker git libicu -y<br></pre>
+<br><br> |
 
 ### Environment variables
 
