@@ -78,6 +78,12 @@ inputs:
     description: >-
       Assign SSH key-pair name to an instance.  This can be useful for SSHing into an instance for debugging.
     required: false
+  save-console-file:
+    description: >-
+      Save the most recent output of the instance's serial console to a file named $save-console-file on the runner.
+      This file can then be uploaded with Artifacts (https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts).
+    required: false
+
 
 outputs:
   label:

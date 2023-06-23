@@ -17,6 +17,7 @@ class Config {
       preRunnerScript: core.getInput('pre-runner-script'),
       blockDeviceMappings: JSON.parse(core.getInput('block-device-mapping')),
       keyName: core.getInput('key-name'),
+      saveConsoleFile: core.getInput('save-console-file'),
     };
 
     const tags = JSON.parse(core.getInput('aws-resource-tags'));
