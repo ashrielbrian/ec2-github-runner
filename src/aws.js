@@ -53,7 +53,6 @@ async function startEc2Instance(label, githubRegistrationToken) {
   if (config.input.keyName) {
     params["KeyName"] = config.input.keyName;
   }
-
   console.log("User params: ", params);
 
   try {
